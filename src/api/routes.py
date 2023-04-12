@@ -16,3 +16,19 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+@api.route('/signup', methods=['POST'])
+def set_signup():
+    password = request.json.get('password', 'Andrea')
+    email = request.json.get('email', None)
+    is_active = request.json.get('is_active', True)
+    try:
+        new_user = User(password = password, email = email, is_active = is_active)
+        db.session.add(new_user)
+        db.session.commit()
+
+    except Exception as e:
+        print(e)
+        return jsonify({'message':f'error: {e}'}), 400
+
+    return jsonify({'message':'ok'}), 200
