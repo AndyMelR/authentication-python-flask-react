@@ -32,3 +32,20 @@ def set_signup():
         return jsonify({'message':f'error: {e}'}), 400
 
     return jsonify({'message':'ok'}), 200
+
+@api.route('/users', methods=['GET'])
+def get_users():
+    return jsonify([user.serialize() for user in User.query.all()]), 200
+
+@api.route('/login', methods=['POST'])
+def login_user():
+    try:
+        email = request.json.get("email")
+        password = request.json.get("password")
+        user = User.query.filter_by(email=email, password=password).first()
+        if User is None:
+            return jsonify({"msg":"Bad request, email or password not valid"}), 401
+        access_token = create_access_token(identity=user.id)
+        return jsonify({"token": access_token}), 200
+    except Exception as e:
+        return jsonify({"error": e}), 400
