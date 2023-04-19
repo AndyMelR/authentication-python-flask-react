@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
+import { Login } from "./login";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
@@ -10,13 +11,16 @@ export const Home = () => {
 	const handleChange = (e) => {
         setUser({...user, [e.target.name]: e.target.value})
 	}
+	
 
 	return (
-		<div className="text-center mt-5">
-			<div className="container p-5 ">
-				<h1 className="title mb-4">Login</h1>
+	<>
+	<div className="container pt-5 m-5">
+		<h2 className="title mb-4">SignUp</h2>
+		<div className="container m-3">
 				<input type="email" placeholder="email" name="email" onChange={handleChange} /> 
 				<input type="password" placeholder="password" name="password" onChange={handleChange} />
+		</div>
 				<button type="button" className="btn btn-success" onClick={() => {
 					fetch("https://3001-4geeksacade-reactflaskh-lfhg7jyme0m.ws-eu93.gitpod.io/api/signup",
 					{
@@ -31,14 +35,15 @@ export const Home = () => {
 					
 
 				}}>Enviar</button>
-			</div>
+	</div>
 			<p>
 				This boilerplate comes with lots of documentation:{" "}
 				<a href="https://start.4geeksacademy.com/starters/react-flask">
 					Read documentation
 				</a>
 			</p>
-		</div>
+		
+	</>
 	);
 };
 
